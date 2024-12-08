@@ -42,7 +42,7 @@ const Homepage = () => {
     <div style={{maxWidth: "1700px", marginTop:"100%" }} >
       <div style={{display:"flex", flexDirection:"row" }}>
       {categories.map((category: Category) =>
-        <Card key={category.idCategory} style={{backgroundColor: "red", borderRadius: "30px", height:"50px",marginRight:"50px", cursor:"pointer"}} onClick={()=>setSelectedCategory(category.strCategory)}>
+        <Card key={category.idCategory} style={{backgroundColor: "#ff0066", borderRadius: "30px", height:"50px",marginRight:"50px", cursor:"pointer"}} onClick={()=>setSelectedCategory(category.strCategory)}>
           <Typography.Paragraph style={{color:"white",display:"flex",alignItems:"center",justifyContent:"center"}}>{category.strCategory}</Typography.Paragraph>
         </Card>
       )}

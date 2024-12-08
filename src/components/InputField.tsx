@@ -14,7 +14,7 @@ const InputField = (props: InputFieldProps) => {
             <Typography.Paragraph>{props.lableName!}</Typography.Paragraph>
             <Input placeholder={props.placeHolder} value={props.value} onChange={(e) => props.setValue(e.target.value)} style={{
                 marginBottom: "20px",
-                borderColor: props.error ? "red" : undefined,
+                borderColor: props.error ? "#ff0066" : undefined,
             }} />
             {props.error && (
                 <Typography.Text type="danger" style={{ fontSize: "12px" }}>

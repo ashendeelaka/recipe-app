@@ -72,12 +72,13 @@ const LoginForm = () => {
                 <Typography.Title level={3}>Login</Typography.Title>
                 <InputField error={errors.email} lableName='Email Address' placeHolder='Enter your email' value={email} setValue={setEmail} />
                 <InputField error={errors.password} lableName='Password' placeHolder='Enter your password' value={password} setValue={setPassword} />
-                <Button type='primary' style={{ width: "100%", paddingTop: "20px", paddingBottom: "20px", marginTop: "20px" }} onClick={() => handleLogin()}>SIGN IN</Button>
+                <Button type='primary' style={{ backgroundColor: "#ff0066", width: "100%", paddingTop: "20px", paddingBottom: "20px", marginTop: "20px" }} onClick={() => handleLogin()}>SIGN IN</Button>
                 {error && (
                     <Typography.Text type="danger" style={{ display: "block", marginTop: "10px" }}>
                         {error}
                     </Typography.Text>
                 )}
+                <Typography.Paragraph style={{display:"flex", flexDirection:"row", justifyContent:"center",marginTop:"10px"}}>Don't have an account? <Typography.Paragraph style={{ color: "#ff0066", cursor: "pointer" }} onClick={() => router.push('/sign-up')}>Create an account</Typography.Paragraph></Typography.Paragraph>
             </Card>
         </div>
     )
