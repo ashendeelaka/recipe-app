@@ -1,4 +1,5 @@
 import { RecipeModel } from '@/models/entities'
+import { HeartFilled, HeartOutlined } from '@ant-design/icons';
 import { Button, Card } from 'antd'
 import Meta from 'antd/es/card/Meta'
 import React from 'react'
@@ -20,7 +21,8 @@ const RecipeCard = (props: RecipeCardProps) => {
     cover={<img alt="example" src={props.recipe.strMealThumb} />}
   >
     <Meta title={props.recipe.strMeal} />
-    <Button onClick={()=>handleClick()}>{props.isFav ?"Delete":"Add"}</Button>
+    <Button icon={props.isFav? <HeartFilled/>: <HeartOutlined/>} onClick={()=>handleClick()} style={{marginTop:"10px"}}></Button>
+   
   </Card>
     </div>
   )
