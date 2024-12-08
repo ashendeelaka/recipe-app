@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 
 const Homepage = () => {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>()
+  const [selectedCategory, setSelectedCategory] = useState<string>('beef')
   const router = useRouter()
   // useAuth();
   useEffect(() => {
@@ -34,16 +34,20 @@ const Homepage = () => {
         console.log("Error fetching categories: ", err)
       }
     };
-
     fetchCategories();
   }, []);
+
+  const getcategoryActiveColor = (category: string)=>{
+    if(category == selectedCategory) {return "#ff0066"}
+    return 'white'
+  }
   
   return (
     <div style={{ marginTop:"150px", display:"flex", alignItems:"center", flexDirection:"column"}} >
       <div style={{display:"flex", flexDirection:"row" }}>
       {categories.map((category: Category) =>
-        <Card key={category.idCategory} style={{backgroundColor: "#ff0066", borderRadius: "30px", height:"50px",marginRight:"50px", cursor:"pointer"}} onClick={()=>setSelectedCategory(category.strCategory)}>
-          <Typography.Paragraph style={{color:"white",display:"flex",alignItems:"center",justifyContent:"center"}}>{category.strCategory}</Typography.Paragraph>
+        <Card key={category.idCategory} style={{ display:"flex",alignItems:"center",border: '1px solid #ff0066', backgroundColor: getcategoryActiveColor(category.strCategory), borderRadius: "30px", height:"50px",marginRight:"50px", cursor:"pointer"}} onClick={()=>setSelectedCategory(category.strCategory)}>
+          <Typography.Paragraph style={{marginTop:"12px",color: `${selectedCategory === category.strCategory ? 'white' : '#ff0066'}`,display:"flex",alignItems:"center",justifyContent:"center"}}>{category.strCategory}</Typography.Paragraph>
         </Card>
       )}
       </div>
