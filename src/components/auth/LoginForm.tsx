@@ -2,14 +2,45 @@ import { Button, Card, Typography } from 'antd'
 import React, { useState } from 'react'
 import InputField from '../InputField'
 import { useRouter } from 'next/navigation'
+import * as Yup from "yup";
+
 
 const LoginForm = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const router = useRouter()
+    const [error, setError] = useState<string | null>(null);
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
-    const handleLogin = async () => {
+    const validationSchema = Yup.object().shape({
+        email: Yup.string().email("Invalid email format").required("Email is required"),
+        password: Yup.string()
+            .min(6, "Password must be at least 6 characters long")
+            .required("Password is required"),
+    });
+
+    const handleValidation = async () => {
         try {
+            await validationSchema.validate(
+                { email, password, },
+                { abortEarly: false }
+            );
+            setErrors({});
+            return true;
+        } catch (err: any) {
+            const validationErrors: Record<string, string> = {};
+            err.inner.forEach((e: any) => {
+                validationErrors[e.path] = e.message;
+            });
+            setErrors(validationErrors);
+            return false;
+        }
+    };
+    const handleLogin = async () => {
+        const isValid = await handleValidation();
+        if (!isValid) return;
+        try {
+            setError(null);
             const response = await fetch("/api/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -24,10 +55,12 @@ const LoginForm = () => {
             }
             else {
                 console.log("problem in login")
+                setError(data.message || "Invalid email or password");
             }
         }
         catch (error) {
             console.log("Login error: ", error)
+            setError("An error occurred during login. Please try again.");
         }
     }
     return (
@@ -37,9 +70,14 @@ const LoginForm = () => {
                     <img src='/cook-logo.png' alt='Logo' width={100} height={50} />
                 </div>
                 <Typography.Title level={3}>Login</Typography.Title>
-                <InputField lableName='Email Address' placeHolder='Enter your email' value={email} setValue={setEmail} />
-                <InputField lableName='Password' placeHolder='Enter your password' value={password} setValue={setPassword} />
+                <InputField error={errors.email} lableName='Email Address' placeHolder='Enter your email' value={email} setValue={setEmail} />
+                <InputField error={errors.password} lableName='Password' placeHolder='Enter your password' value={password} setValue={setPassword} />
                 <Button type='primary' style={{ width: "100%", paddingTop: "20px", paddingBottom: "20px", marginTop: "20px" }} onClick={() => handleLogin()}>SIGN IN</Button>
+                {error && (
+                    <Typography.Text type="danger" style={{ display: "block", marginTop: "10px" }}>
+                        {error}
+                    </Typography.Text>
+                )}
             </Card>
         </div>
     )

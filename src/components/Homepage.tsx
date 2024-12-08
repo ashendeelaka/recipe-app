@@ -37,33 +37,7 @@ const Homepage = () => {
 
     fetchCategories();
   }, []);
-  const handleAddToFavorites = async (recipe: any) => {
-    const token = sessionStorage.getItem('token');
-    if (!token) {
-      router.push('/sign-in');
-      return;
-    }
-
-    try {
-      const res = await fetch("/api/recipes/favorites", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ recipe }),
-      });
-
-      const data = await res.json();
-      if (res.status === 201) {
-        alert('Recipe added to favorites');
-      } else {
-        alert(data.message);
-      }
-    } catch (err) {
-      console.error('Error adding to favorites', err);
-    }
-  };
+  
   return (
     <div style={{}} >
       <div style={{display:"flex", flexDirection:"row", marginTop:"2500px"}}>
