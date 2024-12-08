@@ -10,7 +10,6 @@ interface RecipeGridContainer {
 const RecipeGridContainer = (props: RecipeGridContainer) => {
   const [recipes, setRecipes] = useState()
   const [favorites, setFavorites] = useState<string[]>([]);
-  const [isclicked, setIsClicked] = useState()
   const router = useRouter()
   useEffect(() => {
     const fetchMeals = async () => {
