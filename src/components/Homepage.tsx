@@ -39,8 +39,8 @@ const Homepage = () => {
   }, []);
   
   return (
-    <div style={{}} >
-      <div style={{display:"flex", flexDirection:"row", marginTop:"2500px"}}>
+    <div style={{maxWidth: "1700px", marginTop:"100%" }} >
+      <div style={{display:"flex", flexDirection:"row" }}>
       {categories.map((category: Category) =>
         <Card key={category.idCategory} style={{backgroundColor: "red", borderRadius: "30px", height:"50px",marginRight:"50px", cursor:"pointer"}} onClick={()=>setSelectedCategory(category.strCategory)}>
           <Typography.Paragraph style={{color:"white",display:"flex",alignItems:"center",justifyContent:"center"}}>{category.strCategory}</Typography.Paragraph>

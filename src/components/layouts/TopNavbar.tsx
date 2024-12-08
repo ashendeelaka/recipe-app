@@ -13,10 +13,10 @@ const TopNavBar = () => {
     const onClick: MenuProps['onClick'] = ({ key }) => {
         switch (key) {
             case 'logout':
-
+                logout()
                 break;
-            case 'my_account':
-                router.push("/my-account");
+            case 'favourite':
+                router.push("/favourites");
                 break;
             case 'home':
                 router.push("/");
@@ -31,16 +31,22 @@ const TopNavBar = () => {
 
         },
         {
-            label: 'FAVOURITE',
+            label: 'Favourite',
             key: 'favourite',
 
         },
         {
-            label: 'LOGOUT',
+            label: 'Logout',
             key: 'logout',
             icon: <LogoutOutlined />
         },
     ];
+    const logout = () => {
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("userId");
+        router.push("/sign-in");
+    };
+
 
     return (
         <div
@@ -64,7 +70,7 @@ const TopNavBar = () => {
                         onClick={() => router.push("/")}
                     />
                 </Col>
-                <Col span={8} style={{display:"flex", alignItems:"center",justifyContent:"center"}}>
+                <Col span={8} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <Row justify="center" >
                         <Button
                             type="text"
@@ -78,23 +84,13 @@ const TopNavBar = () => {
                             type="text"
                             size="middle"
                             onClick={() =>
-                                window.open(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/`)
+                                router.push("/favourites")
                             }
                             style={{ fontWeight: 600, marginLeft: 20 }}
                         >
                             FAVOURITE
                         </Button>
                         <div style={{ marginLeft: 50 }}>
-                            {/* {!authContext.isAuthenticated ? (
-                                <Button
-                                    loading={authUser.isLoading!}
-                                    type="primary"
-                                    size="middle"
-                                    style={{ fontWeight: 600 }}
-                                >
-                                    <LoginLink>Log in</LoginLink>
-                                </Button>
-                            ) : ( */}
                             <Dropdown menu={{ items, onClick }}>
                                 <span onClick={(e) => e.preventDefault()}>
                                     <Space>
