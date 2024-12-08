@@ -44,13 +44,13 @@ const FavouriteCardGrid = () => {
             throw new Error("User is not authenticated.");
           }
       
-          const response = await fetch(`/api/recipes/favorites?userId=${userId}`, {
+          const response = await fetch(`/api/recipes/favourites?userId=${userId}`, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`, 
             },
-            body: JSON.stringify({ recipeId: recipeId })
+            body: JSON.stringify({ recipeId :recipeId })
           });
           setFavRecipes(prev=> prev?.filter(item => item.idMeal != recipeId))
 
@@ -74,7 +74,7 @@ const FavouriteCardGrid = () => {
         grid={{
           gutter: 16,
           column: 6,
-          xl: 3,
+          xl: 4,
           lg: 2,
           md: 2,
           sm: 1,
