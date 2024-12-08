@@ -60,8 +60,7 @@ const FavouriteCardGrid = () => {
             throw new Error(data.message || "Failed to delete favorite recipe.");
           }
       
-          console.log("Recipe deleted successfully:", data);
-          // Optionally refresh the list of favorites or update the UI
+          console.log("Recipe deleted successfully:", data); 
         } catch (error) {
           console.error("Error deleting favorite recipe:", error);
         }
@@ -86,7 +85,7 @@ const FavouriteCardGrid = () => {
           <List.Item style={{ display: "flex", justifyContent: "center",margin:"30px" }}>
             <RecipeCard
               recipe={recipe}
-              isFav= {false}
+              isFav= {true}
               onBtnClick = {deleteFavorite}
             />
           </List.Item>
