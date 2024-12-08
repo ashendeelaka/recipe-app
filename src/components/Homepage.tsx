@@ -4,16 +4,27 @@ import { Button, Card, Typography } from 'antd'
 import React, { useEffect, useState } from 'react'
 import RecipeGridContainer from './RecipeGridContainer';
 import { useAuth } from '@/custom-hooks/UseAuth';
+import { useRouter } from 'next/navigation';
 
 const Homepage = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>()
-  useAuth();
+  const router = useRouter()
+  // useAuth();
   useEffect(() => {
    
     const fetchCategories = async () => {
+      const token = sessionStorage.getItem('token');
+    if (!token) {
+      router.push('/sign-in');
+    }
       try {
-        const res = await fetch("/api/categories");
+        const res = await fetch("/api/categories",{
+          method: 'GET',
+          headers: {
+              Authorization: `Bearer ${token}`
+          },
+      });
         const data = await res.json();
         console.log("dsdsdsds", data)
 
@@ -26,6 +37,33 @@ const Homepage = () => {
 
     fetchCategories();
   }, []);
+  const handleAddToFavorites = async (recipe: any) => {
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      router.push('/sign-in');
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/recipes/favorites", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ recipe }),
+      });
+
+      const data = await res.json();
+      if (res.status === 201) {
+        alert('Recipe added to favorites');
+      } else {
+        alert(data.message);
+      }
+    } catch (err) {
+      console.error('Error adding to favorites', err);
+    }
+  };
   return (
     <div style={{}} >
       <div style={{display:"flex", flexDirection:"row", marginTop:"2500px"}}>

@@ -1,12 +1,17 @@
 import { RecipeModel } from '@/models/entities'
-import { Card } from 'antd'
+import { Button, Card } from 'antd'
 import Meta from 'antd/es/card/Meta'
 import React from 'react'
 
 interface RecipeCardProps {
-    recipe: RecipeModel
+    recipe: RecipeModel,
+    isFav: boolean,
+    onBtnClick: (id: string) => void;
 }
 const RecipeCard = (props: RecipeCardProps) => {
+  const handleClick = () => {
+    props.onBtnClick(props.recipe.idMeal);
+  };
   return (
     <div>
        <Card
@@ -15,6 +20,7 @@ const RecipeCard = (props: RecipeCardProps) => {
     cover={<img alt="example" src={props.recipe.strMealThumb} />}
   >
     <Meta title={props.recipe.strMeal} />
+    <Button onClick={()=>handleClick()}>{props.isFav ?"Delete":"Add"}</Button>
   </Card>
     </div>
   )

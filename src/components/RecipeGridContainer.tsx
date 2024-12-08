@@ -26,6 +26,38 @@ const RecipeGridContainer = (props: RecipeGridContainer) => {
 
     fetchMeals();
   }, [props.category]);
+
+  const addFavourite = async (recipeId: string) => {
+    try {
+      
+      const userId = sessionStorage.getItem("userId");
+      const token = sessionStorage.getItem("token");
+  
+      if (!userId || !token) {
+        throw new Error("User is not authenticated.");
+      }
+  
+      const response = await fetch(`/api/recipes/favourites?userId=${userId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, 
+        },
+        body: JSON.stringify({ recipeId: recipeId })
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to add favorite recipe.");
+      }
+  
+      console.log("Recipe added successfully:", data);
+      // Optionally refresh the list of favorites or update the UI
+    } catch (error) {
+      console.error("Error adding favorite recipe:", error);
+    }
+  };
   return (
     <div>
       <List
@@ -43,7 +75,8 @@ const RecipeGridContainer = (props: RecipeGridContainer) => {
           <List.Item style={{ display: "flex", justifyContent: "center",margin:"30px" }}>
             <RecipeCard
               recipe={recipe}
-              
+              isFav= {false}
+              onBtnClick={addFavourite}
             />
           </List.Item>
         )}

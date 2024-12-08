@@ -19,6 +19,7 @@ const LoginForm = () => {
             const data = await response.json();
             if (response.ok) {
                 sessionStorage.setItem("token", data.token)
+                sessionStorage.setItem("userId", data.userId)
                 router.push('/')
             }
             else {

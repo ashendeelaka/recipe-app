@@ -32,7 +32,7 @@ export const POST = async (req: Request) => {
             { expiresIn: "1h" }
         );
        
-        return new Response(JSON.stringify({ message: "Login successful", token: token }), {
+        return new Response(JSON.stringify({ message: "Login successful", token: token, userId: user._id }), {
             status: 200,
         });
 

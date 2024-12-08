@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 
 export const GET = async () => {
     try {
@@ -7,17 +8,17 @@ export const GET = async () => {
         const data = await response.json();
 
         if (!data || !data.categories) {
-            return new Response(JSON.stringify({ message: "Categories not found." }), {
+            return new NextResponse(JSON.stringify({ message: "Categories not found." }), {
                 status: 404,
             });
         }
 
-        return new Response(JSON.stringify(data.categories), {
+        return new NextResponse(JSON.stringify(data.categories), {
             status: 200,
         });
     } catch (error) {
         console.error("Error fetching categories:", error);
-        return new Response(JSON.stringify({ message: "Internal Server Error." }), {
+        return new NextResponse(JSON.stringify({ message: "Internal Server Error." }), {
             status: 500,
         });
 
