@@ -12,6 +12,7 @@ interface RecipeCardProps {
 const RecipeCard = (props: RecipeCardProps) => {
   const handleClick = () => {
     props.onBtnClick(props.recipe.idMeal);
+
   };
   return (
     <div>

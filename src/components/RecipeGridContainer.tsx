@@ -2,12 +2,16 @@ import { List } from 'antd';
 import React, { useEffect, useState } from 'react'
 import RecipeCard from './RecipeCard';
 import { RecipeModel } from '@/models/entities';
+import { useRouter } from 'next/navigation';
 
 interface RecipeGridContainer {
   category: string
 }
 const RecipeGridContainer = (props: RecipeGridContainer) => {
   const [recipes, setRecipes] = useState()
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [isclicked, setIsClicked] = useState()
+  const router = useRouter()
   useEffect(() => {
     const fetchMeals = async () => {
       try {
@@ -24,10 +28,35 @@ const RecipeGridContainer = (props: RecipeGridContainer) => {
       }
     };
 
+    const fetchFavorites = async () => {
+      const userId = sessionStorage.getItem('userId');
+      const token = sessionStorage.getItem('token');
+      
+      if (!userId || !token) {
+        router.push('/sign-in')
+        return};
+      
+      try {
+        const res = await fetch(`/api/recipes/favourites?userId=${userId}`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await res.json();
+        setFavorites(data.map((fav: RecipeModel) => fav.idMeal));
+      } catch (err) {
+        console.error("Error fetching favorites", err);
+      }
+    };
+
     fetchMeals();
+    fetchFavorites()
+
   }, [props.category]);
 
   const addFavourite = async (recipeId: string) => {
+    const isFavorite = favorites.includes(recipeId);
     try {
       
       const userId = sessionStorage.getItem("userId");
@@ -38,7 +67,7 @@ const RecipeGridContainer = (props: RecipeGridContainer) => {
       }
   
       const response = await fetch(`/api/recipes/favourites?userId=${userId}`, {
-        method: "POST",
+        method:  isFavorite ? 'DELETE' : 'POST',
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`, 
@@ -51,9 +80,10 @@ const RecipeGridContainer = (props: RecipeGridContainer) => {
       if (!response.ok) {
         throw new Error(data.message || "Failed to add favorite recipe.");
       }
-  
       console.log("Recipe added successfully:", data);
-      // Optionally refresh the list of favorites or update the UI
+      setFavorites((prev) =>
+        isFavorite ? prev.filter((id) => id !== recipeId) : [...prev, recipeId]
+      );
     } catch (error) {
       console.error("Error adding favorite recipe:", error);
     }
@@ -75,7 +105,7 @@ const RecipeGridContainer = (props: RecipeGridContainer) => {
           <List.Item style={{ display: "flex", justifyContent: "center",margin:"30px" }}>
             <RecipeCard
               recipe={recipe}
-              isFav= {false}
+              isFav= {favorites.includes(recipe.idMeal)}
               onBtnClick={addFavourite}
             />
           </List.Item>
