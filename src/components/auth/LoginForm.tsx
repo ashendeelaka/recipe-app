@@ -75,7 +75,7 @@ const LoginForm = () => {
                 </div>
                 <Typography.Title level={3}>Login</Typography.Title>
                 <InputField error={errors.email} lableName='Email Address' placeHolder='Enter your email' value={email} setValue={setEmail} />
-                <InputField error={errors.password} lableName='Password' placeHolder='Enter your password' value={password} setValue={setPassword} />
+                <InputField isPassword={true} error={errors.password} lableName='Password' placeHolder='Enter your password' value={password} setValue={setPassword} />
                 <Button loading={loading} type='primary' style={{ backgroundColor: "#ff0066", width: "100%", paddingTop: "20px", paddingBottom: "20px", marginTop: "20px" }} onClick={() => handleLogin()}>SIGN IN</Button>
                 {error && (
                     <Typography.Text type="danger" style={{ display: "block", marginTop: "10px" }}>

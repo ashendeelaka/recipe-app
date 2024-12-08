@@ -94,8 +94,8 @@ const RegistrationForm = () => {
                     <InputField error={errors.phone} lableName='Phone Number' value={phone} setValue={setPhone} placeHolder='Enter phone number'></InputField>
                 </div>
                 <div style={{ display: "flex", flexDirection: "row", gap: "15px" }}>
-                    <InputField error={errors.password} lableName='Password' value={password} setValue={setPassword} placeHolder='Enter password'></InputField>
-                    <InputField error={errors.confirmPassword} lableName='Confirm Password' value={confirmPassword} setValue={setConfirmPassword} placeHolder='Confirm your password'></InputField>
+                    <InputField isPassword = {true} error={errors.password} lableName='Password' value={password} setValue={setPassword} placeHolder='Enter password'></InputField>
+                    <InputField isPassword = {true} error={errors.confirmPassword} lableName='Confirm Password' value={confirmPassword} setValue={setConfirmPassword} placeHolder='Confirm your password'></InputField>
                 </div>
                 <Button loading={loading} style={{ backgroundColor: "#ff0066" }} type='primary' onClick={() => handleLogin()}>Create Account</Button>
                 <Typography.Paragraph style={{ display: "flex", flexDirection: "row", justifyContent: "center", marginTop: "10px" }}>Already have an account? <Typography.Paragraph style={{ color: "#ff0066", cursor: "pointer" }} onClick={() => router.push('/sign-in')}>Login</Typography.Paragraph></Typography.Paragraph>
