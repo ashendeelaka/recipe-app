@@ -37,9 +37,9 @@ export const POST = async (req: Request) => {
         });
 
     }
-    catch (error: any) {
+    catch (error: unknown) {
         console.log("Err in api/auth/login: ", error)
-        return new Response(JSON.stringify({ message: error.message }), {
+        return new Response(JSON.stringify({ message: (error as any).message }), {
             status: 500,
         });
 

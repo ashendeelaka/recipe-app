@@ -1,6 +1,4 @@
 import UserDBModel from "@/models/db/user-model";
-import { NextApiRequest } from "next";
-import { NextRequest } from "next/server";
 import dbConnect from "@/lib/db";
 
 export const POST = async (req: Request) => {

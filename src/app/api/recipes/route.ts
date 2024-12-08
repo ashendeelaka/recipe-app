@@ -1,6 +1,5 @@
-import { NextApiRequest } from "next";
 
-export const GET = async (req: NextApiRequest) => {
+export const GET = async (req: Request) => {
     const { searchParams } = new URL(req.url!);
     const category = searchParams.get("category");
 
