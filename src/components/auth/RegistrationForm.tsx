@@ -12,6 +12,7 @@ const RegistrationForm = () => {
     const [password, setPassword] = useState<string>('')
     const [confirmPassword, setConfirmPassword] = useState<string>('')
     const [errors, setErrors] = useState<Record<string, string>>({});
+    const [loading, setLoading] = useState<boolean>()
     const router = useRouter()
 
     const validationSchema = Yup.object().shape({
@@ -50,6 +51,7 @@ const RegistrationForm = () => {
         const isValid = await handleValidation();
         if (!isValid) return;
         try {
+            setLoading(true)
             const response: Response = await fetch("/api/auth/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -69,9 +71,11 @@ const RegistrationForm = () => {
             } else {
                 alert(data.message);
             }
+            setLoading(false)
         }
         catch (err) {
             console.log("Registation err: ", err)
+            setLoading(false)
         }
     };
     return (
@@ -93,7 +97,7 @@ const RegistrationForm = () => {
                     <InputField error={errors.password} lableName='Password' value={password} setValue={setPassword} placeHolder='Enter password'></InputField>
                     <InputField error={errors.confirmPassword} lableName='Confirm Password' value={confirmPassword} setValue={setConfirmPassword} placeHolder='Confirm your password'></InputField>
                 </div>
-                <Button style={{ backgroundColor: "#ff0066" }} type='primary' onClick={() => handleLogin()}>Create Account</Button>
+                <Button loading={loading} style={{ backgroundColor: "#ff0066" }} type='primary' onClick={() => handleLogin()}>Create Account</Button>
                 <Typography.Paragraph style={{ display: "flex", flexDirection: "row", justifyContent: "center", marginTop: "10px" }}>Already have an account? <Typography.Paragraph style={{ color: "#ff0066", cursor: "pointer" }} onClick={() => router.push('/sign-in')}>Login</Typography.Paragraph></Typography.Paragraph>
             </Card>
         </div>

@@ -11,6 +11,7 @@ const LoginForm = () => {
     const router = useRouter()
     const [error, setError] = useState<string | null>(null);
     const [errors, setErrors] = useState<Record<string, string>>({});
+    const [loading, setLoading] = useState<boolean>()
 
     const validationSchema = Yup.object().shape({
         email: Yup.string().email("Invalid email format").required("Email is required"),
@@ -41,6 +42,7 @@ const LoginForm = () => {
         if (!isValid) return;
         try {
             setError(null);
+            setLoading(true)
             const response = await fetch("/api/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -57,8 +59,10 @@ const LoginForm = () => {
                 console.log("problem in login")
                 setError(data.message || "Invalid email or password");
             }
+            setLoading(false)
         }
         catch (error) {
+            setLoading(false)
             console.log("Login error: ", error)
             setError("An error occurred during login. Please try again.");
         }
@@ -72,13 +76,13 @@ const LoginForm = () => {
                 <Typography.Title level={3}>Login</Typography.Title>
                 <InputField error={errors.email} lableName='Email Address' placeHolder='Enter your email' value={email} setValue={setEmail} />
                 <InputField error={errors.password} lableName='Password' placeHolder='Enter your password' value={password} setValue={setPassword} />
-                <Button type='primary' style={{ backgroundColor: "#ff0066", width: "100%", paddingTop: "20px", paddingBottom: "20px", marginTop: "20px" }} onClick={() => handleLogin()}>SIGN IN</Button>
+                <Button loading={loading} type='primary' style={{ backgroundColor: "#ff0066", width: "100%", paddingTop: "20px", paddingBottom: "20px", marginTop: "20px" }} onClick={() => handleLogin()}>SIGN IN</Button>
                 {error && (
                     <Typography.Text type="danger" style={{ display: "block", marginTop: "10px" }}>
                         {error}
                     </Typography.Text>
                 )}
-                <Typography.Paragraph style={{display:"flex", flexDirection:"row", justifyContent:"center",marginTop:"10px"}}>Don't have an account? <Typography.Paragraph style={{ color: "#ff0066", cursor: "pointer" }} onClick={() => router.push('/sign-up')}>Create an account</Typography.Paragraph></Typography.Paragraph>
+                <Typography.Paragraph style={{ display: "flex", flexDirection: "row", justifyContent: "center", marginTop: "10px" }}>Don't have an account? <Typography.Paragraph style={{ color: "#ff0066", cursor: "pointer" }} onClick={() => router.push('/sign-up')}>Create an account</Typography.Paragraph></Typography.Paragraph>
             </Card>
         </div>
     )
