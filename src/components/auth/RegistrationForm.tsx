@@ -85,11 +85,11 @@ const RegistrationForm = () => {
                     <img src='/cook-logo.png' alt='Logo' width={100} height={50} />
                 </div>
                 <Typography.Title level={3}>Register</Typography.Title>
-                <div style={{ display: "flex", flexDirection: "row", gap: "15px" }}>
+                <div style={{ display: "flex", flexDirection: "row", gap: "35px" }}>
                     <InputField error={errors.firstName} lableName='First Name' value={firstName} setValue={setFirstName} placeHolder='Enter first name'></InputField>
                     <InputField error={errors.lableName} lableName='Last Name' value={lastName} setValue={setLastName} placeHolder='Enter last name'></InputField>
                 </div>
-                <div style={{ display: "flex", flexDirection: "row", gap: "15px" }}>
+                <div style={{ display: "flex", flexDirection: "row", gap: "35px" }}>
                     <InputField error={errors.email} lableName='Email' value={email} setValue={setEmail} placeHolder='Enter email'></InputField>
                     <InputField error={errors.phone} lableName='Phone Number' value={phone} setValue={setPhone} placeHolder='Enter phone number'></InputField>
                 </div>
