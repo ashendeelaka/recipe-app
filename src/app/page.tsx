@@ -5,8 +5,8 @@ import WithTopNavBar from "@/components/layouts/WithTopNavBar";
 
 export default function Home() {
     return (
-        <div className={styles.page}>
-            <main >
+        <div >
+            <main>
                 <WithTopNavBar>
                     <Homepage />
                 </WithTopNavBar>

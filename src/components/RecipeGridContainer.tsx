@@ -59,12 +59,12 @@ const RecipeGridContainer = (props: RecipeGridContainer) => {
     }
   };
   return (
-    <div>
+    <div style={{display:"flex", alignItems:"center", flexDirection:"column",maxWidth:"1700px"}}>
       <List
         grid={{
           gutter: 16,
           column: 6,
-          xl: 3,
+          xl: 4,
           lg: 2,
           md: 2,
           sm: 1,

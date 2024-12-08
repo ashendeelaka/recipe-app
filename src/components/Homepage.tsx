@@ -39,7 +39,7 @@ const Homepage = () => {
   }, []);
   
   return (
-    <div style={{maxWidth: "1700px", marginTop:"100%" }} >
+    <div style={{ marginTop:"150px", display:"flex", alignItems:"center", flexDirection:"column"}} >
       <div style={{display:"flex", flexDirection:"row" }}>
       {categories.map((category: Category) =>
         <Card key={category.idCategory} style={{backgroundColor: "#ff0066", borderRadius: "30px", height:"50px",marginRight:"50px", cursor:"pointer"}} onClick={()=>setSelectedCategory(category.strCategory)}>
